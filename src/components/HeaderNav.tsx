@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, ChevronLeft, ChevronRight, Layers } from 'lucide-react';
+import { Heart, ChevronLeft, ChevronRight, Layers, Sparkles } from 'lucide-react';
 import { AudioToggle } from './AudioToggle';
 
 interface HeaderNavProps {
@@ -8,6 +8,7 @@ interface HeaderNavProps {
   totalScenes: number;
   onSelectScene: (sceneIndex: number) => void;
   onOpenShowcase: () => void;
+  onReplayCurtain?: () => void;
 }
 
 const SCENE_NAMES = [
@@ -26,6 +27,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   totalScenes,
   onSelectScene,
   onOpenShowcase,
+  onReplayCurtain,
 }) => {
   return (
     <header className="sticky top-0 left-0 right-0 z-40 px-4 sm:px-8 py-3.5 flex items-center justify-between glass-panel-subtle backdrop-blur-xl border-b border-white/60">
@@ -53,7 +55,7 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           onClick={() => onSelectScene(Math.max(1, currentScene - 1))}
           disabled={currentScene === 1}
           aria-label="Previous scene"
-          className="p-1.5 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="p-1.5 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
@@ -82,14 +84,27 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
           onClick={() => onSelectScene(Math.min(totalScenes, currentScene + 1))}
           disabled={currentScene === totalScenes}
           aria-label="Next scene"
-          className="p-1.5 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="p-1.5 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-white/80 disabled:opacity-30 disabled:cursor-not-allowed transition-all cursor-pointer"
         >
           <ChevronRight className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Right controls: Audio & Developer Transition Showcase Lab */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      {/* Right controls: Replay Curtain, Audio, & Developer Transition Showcase Lab */}
+      <div className="flex items-center gap-2 sm:gap-2.5">
+        {onReplayCurtain && (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={onReplayCurtain}
+            title="Replay Opening Curtain"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/70 hover:bg-white/90 border border-white text-xs font-medium text-[#202642] shadow-sm transition-all cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#8DBBFF]" />
+            <span className="hidden lg:inline">Curtain</span>
+          </motion.button>
+        )}
+
         <AudioToggle />
 
         <motion.button

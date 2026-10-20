@@ -6,6 +6,7 @@ import { BackgroundDecor } from './components/BackgroundDecor';
 import { CustomCursor } from './components/CustomCursor';
 import { HeaderNav } from './components/HeaderNav';
 import { TransitionShowcase } from './components/TransitionShowcase';
+import { CurtainIntro } from './components/CurtainIntro';
 
 // Scenes
 import { Scene1DreamyOpening } from './scenes/Scene1DreamyOpening';
@@ -32,6 +33,9 @@ const SCENE_TRANSITIONS: Record<number, PageTransitionId> = {
 export const App: React.FC = () => {
   const [currentScene, setCurrentScene] = useState(1);
   const [direction, setDirection] = useState<'forward' | 'reverse'>('forward');
+  const [showCurtain, setShowCurtain] = useState(true);
+  const [curtainKey, setCurtainKey] = useState(0);
+
   const [isShowcaseOpen, setIsShowcaseOpen] = useState(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
@@ -59,13 +63,21 @@ export const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  const handleReplayCurtain = useCallback(() => {
+    setDirection('reverse');
+    setCurrentScene(1);
+    setCurtainKey((k) => k + 1);
+    setShowCurtain(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // If modal or showcase is open, let Esc handle it
-      if (e.key === 'ArrowRight' && !isShowcaseOpen) {
+      if (e.key === 'ArrowRight' && !isShowcaseOpen && !showCurtain) {
         handleNextScene();
-      } else if (e.key === 'ArrowLeft' && !isShowcaseOpen) {
+      } else if (e.key === 'ArrowLeft' && !isShowcaseOpen && !showCurtain) {
         if (currentScene > 1) {
           goToScene(currentScene - 1);
         }
@@ -77,13 +89,22 @@ export const App: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentScene, isShowcaseOpen, handleNextScene, goToScene]);
+  }, [currentScene, isShowcaseOpen, showCurtain, handleNextScene, goToScene]);
 
   // Current page transition variant
   const currentTransitionId = SCENE_TRANSITIONS[currentScene] || 'fade-through-white';
 
   return (
     <div className="relative min-h-screen bg-mesh-dreamscape text-[#202642] flex flex-col justify-between selection:bg-[#CFE5FF] selection:text-[#202642]">
+      {/* Cinematic Opening Curtain Loader */}
+      {showCurtain && (
+        <CurtainIntro
+          key={curtainKey}
+          onComplete={() => setShowCurtain(false)}
+          isReplaying={curtainKey > 0}
+        />
+      )}
+
       {/* Custom Desktop Cursor */}
       <CustomCursor />
 
@@ -96,6 +117,7 @@ export const App: React.FC = () => {
         totalScenes={totalScenes}
         onSelectScene={goToScene}
         onOpenShowcase={() => setIsShowcaseOpen(true)}
+        onReplayCurtain={handleReplayCurtain}
       />
 
       {/* Main Animated Scene Container */}
@@ -152,6 +174,7 @@ export const App: React.FC = () => {
               config={defaultApologyConfig}
               onReplay={handleReplay}
               onOpenLab={() => setIsShowcaseOpen(true)}
+              onReplayCurtain={handleReplayCurtain}
             />
           )}
         </PageTransitionWrapper>

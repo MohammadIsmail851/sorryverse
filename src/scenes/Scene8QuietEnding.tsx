@@ -10,9 +10,10 @@ interface Scene8Props {
   config: ApologyConfig;
   onReplay: () => void;
   onOpenLab: () => void;
+  onReplayCurtain?: () => void;
 }
 
-export const Scene8QuietEnding: React.FC<Scene8Props> = ({ config, onReplay, onOpenLab }) => {
+export const Scene8QuietEnding: React.FC<Scene8Props> = ({ config, onReplay, onOpenLab, onReplayCurtain }) => {
   return (
     <div className="relative min-h-[90vh] flex flex-col items-center justify-between px-4 sm:px-6 text-center z-10 py-16 max-w-4xl mx-auto">
       <div />
@@ -53,8 +54,8 @@ export const Scene8QuietEnding: React.FC<Scene8Props> = ({ config, onReplay, onO
           delay={0.6}
         />
 
-        {/* Replay Button & Lab button */}
-        <div className="flex flex-wrap items-center justify-center gap-4">
+        {/* Replay Buttons & Lab button */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
           <AnimatedElement variant="spring-overshoot" delay={0.9}>
             <Button
               size="md"
@@ -65,6 +66,19 @@ export const Scene8QuietEnding: React.FC<Scene8Props> = ({ config, onReplay, onO
               {config.scene8Ending.replayButton}
             </Button>
           </AnimatedElement>
+
+          {onReplayCurtain && (
+            <AnimatedElement variant="spring-overshoot" delay={1.0}>
+              <Button
+                size="md"
+                variant="glass"
+                onClick={onReplayCurtain}
+                icon={<Sparkles className="w-4 h-4 text-[#8DBBFF]" />}
+              >
+                Replay Curtain Opening
+              </Button>
+            </AnimatedElement>
+          )}
 
           <AnimatedElement variant="spring-overshoot" delay={1.1}>
             <Button

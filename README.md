@@ -7,6 +7,11 @@
 
 ## 🌟 Highlights
 
+- **Cinematic Opening Curtain Loader (`CurtainIntro`)**:
+  - Full-screen dual-curtain theatre opening styled with light-themed romantic pearl-white, ice-blue, and blush-pink fabric folds.
+  - Features real readiness detection, drifting particles, central glass heart medallion, and an "Open the Curtains" glass invitation button.
+  - On click, curtains part outward with natural fabric gather physics, parting petals, and gentle ambient chimes, seamlessly handing off to Scene 1.
+  - Replayable at any time via the "Curtain" button in the header or in Scene 8.
 - **63 Distinct Motion Transitions** across 3 categories:
   - **21 Page / Section Transitions**: Fade through white, directional blur, 3D card flip, 3D cube rotation, circular clip-path iris, expanding radial mask, curtain reveal, liquid shape morph, layered parallax, perspective depth, pixel-grid, organic SVG wipe, and more.
   - **21 Animated Typography Transitions**: Character-by-character reveal, word-by-word reveal, line-by-line editorial reveal, typewriter with blinking cursor, blur-to-sharp, letter-spacing collapse, scale pop, 3D X/Y-axis rotation, masked text reveal, scramble-to-readable glyph decoding, word replacement morph, SVG handwritten underline, spring bounce, and more.
