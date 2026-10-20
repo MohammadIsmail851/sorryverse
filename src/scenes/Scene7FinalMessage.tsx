@@ -5,6 +5,7 @@ import { AnimatedText } from '../transitions/textTransitions';
 import { AnimatedElement } from '../transitions/elementTransitions';
 import { Button } from '../components/common/Button';
 import { GlassCard } from '../components/common/GlassCard';
+import { GlassHeart } from '../components/GlassHeart';
 import type { ApologyConfig } from '../config/apologyConfig';
 
 interface Scene7Props {
@@ -45,6 +46,16 @@ export const Scene7FinalMessage: React.FC<Scene7Props> = ({ config, onProceed })
           />
         </div>
       </div>
+
+      {/* Glass Heart — quiet presence above the choice */}
+      <AnimatedElement variant="fade-scale" delay={0.3} className="mb-6">
+        <GlassHeart
+          size="sm"
+          enablePointerTilt={false}
+          idleFloat={true}
+          glowColor="#FFE0EB"
+        />
+      </AnimatedElement>
 
       {/* Choice Card Area */}
       <GlassCard className="w-full max-w-xl mb-10 text-left backdrop-blur-2xl">

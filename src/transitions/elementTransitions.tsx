@@ -465,14 +465,34 @@ export const AnimatedElement: React.FC<ElementTransitionProps> = ({
   }
 
   // 21. Bonus: Shared Expansion Modal
-  return (
-    <motion.div
-      whileTap={{ scale: 0.98 }}
-      whileHover={{ scale: 1.02 }}
-      className={`glass-panel-subtle rounded-3xl p-4 cursor-pointer hover:border-[#648BFF]/50 transition-all ${className}`}
-      onClick={onClick}
-    >
-      {children}
-    </motion.div>
-  );
+  if (variant === 'shared-expansion-modal') {
+    return (
+      <motion.div
+        whileTap={{ scale: 0.98 }}
+        whileHover={{ scale: 1.02 }}
+        className={`glass-panel-subtle rounded-3xl p-4 cursor-pointer hover:border-[#648BFF]/50 transition-all ${className}`}
+        onClick={onClick}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
+  // 22. Fade Scale
+  if (variant === 'fade-scale') {
+    return (
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.55, delay, ease: [0.34, 1.56, 0.64, 1] }}
+        className={className}
+        onClick={onClick}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+
+  // Fallback
+  return <div className={className} onClick={onClick}>{children}</div>;
 };

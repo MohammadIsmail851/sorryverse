@@ -65,7 +65,8 @@ export type ElementTransitionId =
   | 'particle-burst'
   | 'svg-path-drawing'
   | 'cursor-parallax'
-  | 'shared-expansion-modal';
+  | 'shared-expansion-modal'
+  | 'fade-scale';
 
 export interface TransitionMetadata {
   id: string;

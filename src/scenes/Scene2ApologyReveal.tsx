@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { AnimatedText } from '../transitions/textTransitions';
 import { AnimatedElement } from '../transitions/elementTransitions';
 import { Button } from '../components/common/Button';
+import { GlassHeart } from '../components/GlassHeart';
 import type { ApologyConfig } from '../config/apologyConfig';
 
 interface Scene2Props {
@@ -11,29 +12,66 @@ interface Scene2Props {
   onProceed: () => void;
 }
 
+// Cinematic split-letter component with perspective spring
+const CinematicWord: React.FC<{
+  word: string;
+  delay?: number;
+  color?: string;
+  size?: string;
+}> = ({ word, delay = 0, color = '#648BFF', size = 'text-5xl sm:text-7xl md:text-9xl' }) => {
+  return (
+    <div
+      className={`inline-flex font-serif font-black tracking-wider ${size}`}
+      aria-label={word}
+      style={{ perspective: '1200px' }}
+    >
+      {word.split('').map((letter, i) => (
+        <motion.span
+          key={i}
+          aria-hidden="true"
+          initial={{
+            opacity: 0,
+            y: i % 2 === 0 ? -80 : 80,
+            rotateX: i % 2 === 0 ? 90 : -90,
+            filter: 'blur(12px)',
+            color: '#aaa',
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            filter: 'blur(0px)',
+            color: color,
+          }}
+          transition={{
+            type: 'spring',
+            stiffness: 200,
+            damping: 20,
+            delay: delay + i * 0.08,
+          }}
+          className="inline-block"
+          style={{ transformStyle: 'preserve-3d', display: 'inline-block' }}
+        >
+          {letter}
+        </motion.span>
+      ))}
+    </div>
+  );
+};
+
 export const Scene2ApologyReveal: React.FC<Scene2Props> = ({ config, onProceed }) => {
   const [phase, setPhase] = useState<'intro' | 'reforming' | 'revealed'>('intro');
 
   useEffect(() => {
-    // Dramatic step 1: Show "I AM..."
-    const timer1 = window.setTimeout(() => {
-      setPhase('reforming');
-    }, 1600);
-
-    // Dramatic step 2: Reform into "SORRY."
-    const timer2 = window.setTimeout(() => {
-      setPhase('revealed');
-    }, 2900);
-
+    const timer1 = window.setTimeout(() => setPhase('reforming'), 1600);
+    const timer2 = window.setTimeout(() => setPhase('revealed'), 3200);
     return () => {
       clearTimeout(timer1);
       clearTimeout(timer2);
     };
   }, []);
 
-  const fastForward = () => {
-    setPhase('revealed');
-  };
+  const fastForward = () => setPhase('revealed');
 
   return (
     <div className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 sm:px-6 text-center z-10 py-12">
@@ -42,23 +80,28 @@ export const Scene2ApologyReveal: React.FC<Scene2Props> = ({ config, onProceed }
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5 }}
-        className="absolute w-[450px] sm:w-[650px] h-[450px] sm:h-[650px] bg-gradient-to-tr from-[#CFE5FF]/40 via-[#DCD6FF]/35 to-[#FFE0EB]/30 rounded-full blur-3xl -z-10"
+        className="absolute w-[500px] sm:w-[700px] h-[500px] sm:h-[700px] -z-10"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(207,229,255,0.45) 0%, rgba(220,214,255,0.3) 45%, rgba(255,224,235,0.2) 70%, transparent 90%)',
+          filter: 'blur(60px)',
+        }}
       />
 
-      {/* Main Apology Headline container */}
+      {/* Main Apology Headline — Cinematic 3-Phase Reveal */}
       <div
         onClick={fastForward}
-        className="min-h-[140px] sm:min-h-[180px] flex items-center justify-center mb-6 cursor-pointer select-none"
-        title="Tap to reveal"
+        className="min-h-[180px] sm:min-h-[220px] flex items-center justify-center mb-8 cursor-pointer select-none"
+        title="Tap to fast-forward"
+        style={{ perspective: '1200px' }}
       >
         <AnimatePresence mode="wait">
           {phase === 'intro' && (
             <motion.div
               key="intro"
-              initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+              initial={{ opacity: 0, y: 30, filter: 'blur(16px)' }}
               animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.15, filter: 'blur(12px)' }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, scale: 1.12, filter: 'blur(20px)', transition: { duration: 0.5 } }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-widest text-[#78809B]"
             >
               {config.scene2.introPart1}
@@ -68,74 +111,68 @@ export const Scene2ApologyReveal: React.FC<Scene2Props> = ({ config, onProceed }
           {phase === 'reforming' && (
             <motion.div
               key="reforming"
-              aria-label={config.scene2.mainWord}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="flex gap-2 sm:gap-4 font-serif text-5xl sm:text-7xl md:text-8xl font-black text-[#648BFF]"
+              exit={{ opacity: 0, transition: { duration: 0.3 } }}
+              className="flex flex-col items-center gap-2"
             >
-              {config.scene2.mainWord.split('').map((letter, i) => (
-                <motion.span
-                  key={`letter-${i}`}
-                  initial={{
-                    y: (i % 2 === 0 ? -60 : 60),
-                    x: (i - 2) * 25,
-                    opacity: 0,
-                    filter: 'blur(8px)',
-                    rotate: (i % 2 === 0 ? -24 : 24),
-                  }}
-                  animate={{
-                    y: 0,
-                    x: 0,
-                    opacity: 1,
-                    filter: 'blur(0px)',
-                    rotate: 0,
-                  }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 280,
-                    damping: 18,
-                    delay: i * 0.07,
-                  }}
-                  className="inline-block"
-                >
-                  {letter}
-                </motion.span>
-              ))}
+              <CinematicWord
+                word={config.scene2.mainWord}
+                delay={0}
+                color="#648BFF"
+                size="text-5xl sm:text-7xl md:text-8xl"
+              />
+              {/* Underline sweep */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.6, duration: 0.8, ease: [0.65, 0, 0.35, 1] }}
+                style={{ originX: 0 }}
+                className="h-1 w-full rounded-full bg-gradient-to-r from-[#8DBBFF] via-[#648BFF] to-[#DCD6FF]"
+              />
             </motion.div>
           )}
 
           {phase === 'revealed' && (
             <motion.div
               key="revealed"
-              initial={{ scale: 0.88, filter: 'blur(8px)', opacity: 0 }}
+              initial={{ scale: 0.85, filter: 'blur(10px)', opacity: 0 }}
               animate={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-              className="flex flex-col items-center"
+              transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
+              className="flex flex-col items-center gap-3"
             >
-              <h1 className="font-serif text-5xl sm:text-7xl md:text-8xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#648BFF] via-[#7B73F0] to-[#8DBBFF]">
+              <h1
+                className="font-serif text-5xl sm:text-7xl md:text-9xl font-black tracking-wider"
+                style={{
+                  background: 'linear-gradient(135deg, #648BFF 0%, #7B73F0 35%, #8DBBFF 65%, #DCD6FF 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 2px 24px rgba(100,139,255,0.35))',
+                }}
+              >
                 {config.scene2.mainWord}
               </h1>
+              {/* Cinematic period dot */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.3, type: 'spring', stiffness: 500, damping: 25 }}
+                className="w-3 h-3 rounded-full bg-gradient-to-br from-[#8DBBFF] to-[#648BFF] shadow-lg shadow-[#8DBBFF]/40"
+              />
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Small glowing animated heart underneath */}
+      {/* Glass Heart — integrating the reusable heart */}
       <AnimatedElement variant="soft-glow-pulse" className="mb-8">
-        <motion.div
-          animate={{
-            scale: [1, 1.15, 1],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 2.2,
-            ease: 'easeInOut',
-          }}
-          className="w-12 h-12 rounded-full bg-white/80 backdrop-blur-md border border-[#8DBBFF]/40 shadow-glass flex items-center justify-center text-[#648BFF]"
-        >
-          <Heart className="w-6 h-6 fill-[#FFE0EB] text-[#648BFF]" />
-        </motion.div>
+        <GlassHeart
+          size="sm"
+          enablePointerTilt={false}
+          idleFloat={true}
+          glowColor="#FFE0EB"
+        />
       </AnimatedElement>
 
       {/* Supporting message */}

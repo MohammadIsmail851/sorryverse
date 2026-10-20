@@ -1,9 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Heart } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import { AnimatedText } from '../transitions/textTransitions';
 import { AnimatedElement } from '../transitions/elementTransitions';
 import { Button } from '../components/common/Button';
+import { GlassHeart } from '../components/GlassHeart';
 import type { ApologyConfig } from '../config/apologyConfig';
 import { ambientSound } from '../audio/ambientSound';
 
@@ -14,36 +15,33 @@ interface Scene1Props {
 
 export const Scene1DreamyOpening: React.FC<Scene1Props> = ({ config, onProceed }) => {
   const handleOpenHeart = () => {
-    // Start gentle ambient sound if not already started
     ambientSound.startAmbience();
     onProceed();
   };
 
   return (
     <div className="relative min-h-[90vh] flex flex-col items-center justify-center px-4 sm:px-6 text-center z-10 py-12">
-      {/* Little floating glowing 3D-styled heart */}
-      <AnimatedElement variant="floating-idle" className="mb-6">
-        <AnimatedElement variant="tilt-3d-hover">
-          <div className="relative group cursor-pointer" onClick={handleOpenHeart}>
-            <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-gradient-to-tr from-[#CFE5FF] via-white to-[#FFE0EB] p-0.5 shadow-glass shadow-[#8DBBFF]/20 flex items-center justify-center transform transition-transform group-hover:scale-105">
-              <motion.div
-                animate={{
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 2.8,
-                  ease: 'easeInOut',
-                }}
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-[22px] bg-white/80 backdrop-blur-md flex items-center justify-center shadow-inner"
-              >
-                <Heart className="w-8 h-8 text-[#648BFF] fill-[#CFE5FF]/70" />
-              </motion.div>
-            </div>
-            {/* Soft halo glow */}
-            <div className="absolute inset-0 bg-[#8DBBFF]/30 rounded-3xl blur-xl -z-10 animate-pulse-glow" />
-          </div>
-        </AnimatedElement>
+      {/* Large ambient orb behind heart */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute w-[500px] h-[500px] rounded-full pointer-events-none -z-10"
+        style={{
+          background: 'radial-gradient(ellipse at center, rgba(207,229,255,0.4) 0%, rgba(220,214,255,0.25) 45%, transparent 75%)',
+          filter: 'blur(40px)',
+        }}
+      />
+
+      {/* Living 3D Glass Heart — Main CTA */}
+      <AnimatedElement variant="floating-idle" className="mb-8">
+        <GlassHeart
+          size="xl"
+          onClick={handleOpenHeart}
+          enablePointerTilt={true}
+          idleFloat={false}
+          glowColor="#8DBBFF"
+        />
       </AnimatedElement>
 
       {/* Ephemeral teaser phrases */}
@@ -64,14 +62,14 @@ export const Scene1DreamyOpening: React.FC<Scene1Props> = ({ config, onProceed }
         />
       </div>
 
-      {/* Main Title */}
+      {/* Main Title with cinematic letter animation */}
       <div className="max-w-3xl mx-auto mb-8">
         <AnimatedText
           text={config.scene1.headline}
-          variant="letter-spacing-collapse"
+          variant="split-reassemble"
           as="h1"
           className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#202642] leading-tight"
-          delay={1.4}
+          delay={1.2}
         />
         <AnimatedText
           text={config.scene1.subheadline}
@@ -98,14 +96,14 @@ export const Scene1DreamyOpening: React.FC<Scene1Props> = ({ config, onProceed }
         </AnimatedElement>
       </AnimatedElement>
 
-      {/* Subtle click or scroll hint */}
+      {/* Subtle scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.6, duration: 1 }}
         className="flex flex-col items-center gap-1.5 text-xs text-[#78809B]/70"
       >
-        <span>Click to begin the journey</span>
+        <span>Click the heart or button to begin</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
