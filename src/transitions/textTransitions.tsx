@@ -76,23 +76,32 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 
   // 1. Character by character
   if (variant === 'char-by-char') {
+    let charIdx = 0;
+    const words = text.split(' ');
     return (
-      <Component className={`inline-flex flex-wrap ${className}`} aria-label={text}>
-        {text.split('').map((char, i) => (
-          <motion.span
-            key={i}
-            aria-hidden="true"
-            initial={{ opacity: 0, y: 16, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: 0.4,
-              delay: delay + i * 0.035,
-              ease: [0.34, 1.56, 0.64, 1]
-            }}
-            className={char === ' ' ? 'inline-block w-2' : 'inline-block'}
-          >
-            {char}
-          </motion.span>
+      <Component className={`inline-flex flex-wrap justify-center gap-x-[0.28em] gap-y-1 ${className}`} aria-label={text}>
+        {words.map((word, wordIdx) => (
+          <span key={wordIdx} className="inline-block whitespace-nowrap">
+            {word.split('').map((char) => {
+              const i = charIdx++;
+              return (
+                <motion.span
+                  key={i}
+                  aria-hidden="true"
+                  initial={{ opacity: 0, y: 16, scale: 0.8 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{
+                    duration: 0.4,
+                    delay: delay + i * 0.035,
+                    ease: [0.34, 1.56, 0.64, 1]
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
         ))}
       </Component>
     );
@@ -101,7 +110,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   // 2. Word by word
   if (variant === 'word-by-word') {
     return (
-      <Component className={`inline-flex flex-wrap gap-x-2 ${className}`} aria-label={text}>
+      <Component className={`inline-flex flex-wrap justify-center gap-x-2 gap-y-1 ${className}`} aria-label={text}>
         {text.split(' ').map((word, i) => (
           <motion.span
             key={i}
@@ -113,7 +122,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
               delay: delay + i * 0.12,
               ease: [0.16, 1, 0.3, 1]
             }}
-            className="inline-block"
+            className="inline-block whitespace-nowrap"
           >
             {word}
           </motion.span>
@@ -126,13 +135,14 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   if (variant === 'line-by-line') {
     return (
       <Component className={`overflow-hidden ${className}`}>
-        <motion.div
+        <motion.span
+          className="block"
           initial={{ y: '100%', opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
         >
           {text}
-        </motion.div>
+        </motion.span>
       </Component>
     );
   }
@@ -317,28 +327,37 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 
   // 16. Split and reassemble letters
   if (variant === 'split-reassemble') {
+    let charIdx = 0;
+    const words = text.split(' ');
     return (
-      <Component className={`inline-flex flex-wrap ${className}`} aria-label={text}>
-        {text.split('').map((char, i) => (
-          <motion.span
-            key={i}
-            aria-hidden="true"
-            initial={{
-              opacity: 0,
-              x: (i % 2 === 0 ? -35 : 35),
-              y: (i % 3 === 0 ? -24 : 24),
-              rotate: (i % 2 === 0 ? -30 : 30)
-            }}
-            animate={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
-            transition={{
-              duration: 0.7,
-              delay: delay + i * 0.04,
-              ease: [0.34, 1.56, 0.64, 1]
-            }}
-            className={char === ' ' ? 'inline-block w-2' : 'inline-block'}
-          >
-            {char}
-          </motion.span>
+      <Component className={`inline-flex flex-wrap justify-center gap-x-[0.28em] gap-y-1 ${className}`} aria-label={text}>
+        {words.map((word, wordIdx) => (
+          <span key={wordIdx} className="inline-block whitespace-nowrap">
+            {word.split('').map((char) => {
+              const i = charIdx++;
+              return (
+                <motion.span
+                  key={i}
+                  aria-hidden="true"
+                  initial={{
+                    opacity: 0,
+                    x: (i % 2 === 0 ? -35 : 35),
+                    y: (i % 3 === 0 ? -24 : 24),
+                    rotate: (i % 2 === 0 ? -30 : 30)
+                  }}
+                  animate={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+                  transition={{
+                    duration: 0.7,
+                    delay: delay + i * 0.04,
+                    ease: [0.34, 1.56, 0.64, 1]
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
         ))}
       </Component>
     );
@@ -385,24 +404,33 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 
   // 19. Spring-based letter bounce
   if (variant === 'spring-bounce') {
+    let charIdx = 0;
+    const words = text.split(' ');
     return (
-      <Component className={`inline-flex flex-wrap ${className}`} aria-label={text}>
-        {text.split('').map((char, i) => (
-          <motion.span
-            key={i}
-            aria-hidden="true"
-            initial={{ y: -45, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{
-              type: 'spring',
-              stiffness: 320,
-              damping: 14,
-              delay: delay + i * 0.05
-            }}
-            className={char === ' ' ? 'inline-block w-2' : 'inline-block'}
-          >
-            {char}
-          </motion.span>
+      <Component className={`inline-flex flex-wrap justify-center gap-x-[0.28em] gap-y-1 ${className}`} aria-label={text}>
+        {words.map((word, wordIdx) => (
+          <span key={wordIdx} className="inline-block whitespace-nowrap">
+            {word.split('').map((char) => {
+              const i = charIdx++;
+              return (
+                <motion.span
+                  key={i}
+                  aria-hidden="true"
+                  initial={{ y: -45, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 320,
+                    damping: 14,
+                    delay: delay + i * 0.05
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
         ))}
       </Component>
     );
@@ -410,26 +438,35 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
 
   // 20. Gentle wave reveal
   if (variant === 'gentle-wave') {
+    let charIdx = 0;
+    const words = text.split(' ');
     return (
-      <Component className={`inline-flex flex-wrap ${className}`} aria-label={text}>
-        {text.split('').map((char, i) => (
-          <motion.span
-            key={i}
-            aria-hidden="true"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{
-              opacity: 1,
-              y: [16, -7, 0]
-            }}
-            transition={{
-              duration: 0.75,
-              delay: delay + i * 0.04,
-              ease: 'easeInOut'
-            }}
-            className={char === ' ' ? 'inline-block w-2' : 'inline-block'}
-          >
-            {char}
-          </motion.span>
+      <Component className={`inline-flex flex-wrap justify-center gap-x-[0.28em] gap-y-1 ${className}`} aria-label={text}>
+        {words.map((word, wordIdx) => (
+          <span key={wordIdx} className="inline-block whitespace-nowrap">
+            {word.split('').map((char) => {
+              const i = charIdx++;
+              return (
+                <motion.span
+                  key={i}
+                  aria-hidden="true"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{
+                    opacity: 1,
+                    y: [16, -7, 0]
+                  }}
+                  transition={{
+                    duration: 0.75,
+                    delay: delay + i * 0.04,
+                    ease: 'easeInOut'
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              );
+            })}
+          </span>
         ))}
       </Component>
     );

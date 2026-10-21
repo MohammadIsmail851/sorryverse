@@ -62,7 +62,7 @@ export const Scene8QuietEnding: React.FC<Scene8Props> = ({
         </AnimatedElement>
 
         {/* Action buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-4 w-full max-w-md mx-auto">
           <AnimatedElement variant="spring-overshoot" delay={0.9}>
             <Button
               size="md"

@@ -63,12 +63,12 @@ export const Scene1DreamyOpening: React.FC<Scene1Props> = ({ config, onProceed }
       </div>
 
       {/* Main Title with cinematic letter animation */}
-      <div className="max-w-3xl mx-auto mb-8">
+      <div className="max-w-xl sm:max-w-2xl mx-auto mb-8 px-2 text-center">
         <AnimatedText
           text={config.scene1.headline}
           variant="split-reassemble"
           as="h1"
-          className="font-serif text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#202642] leading-tight"
+          className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#202642] leading-[1.18] sm:leading-tight"
           delay={1.2}
         />
         <AnimatedText

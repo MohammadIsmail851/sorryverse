@@ -38,7 +38,7 @@ export const Scene4WordsFromHeart: React.FC<Scene4Props> = ({ config, onProceed 
       </div>
 
       {/* 3 Floating Glass Cards Grid with 3D tilt and expansion */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 w-full mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 w-full mb-12">
         {config.scene4Cards.map((card, idx) => (
           <AnimatedElement
             key={card.id}
@@ -50,7 +50,7 @@ export const Scene4WordsFromHeart: React.FC<Scene4Props> = ({ config, onProceed 
               <motion.div
                 whileHover={{ y: -6 }}
                 onClick={() => setSelectedCardId(card.id)}
-                className="group relative glass-panel rounded-3xl p-6 sm:p-8 h-full flex flex-col justify-between cursor-pointer border border-white/80 hover:border-[#8DBBFF]/60 hover:shadow-glass-hover transition-all duration-300"
+                className="group relative glass-panel rounded-3xl p-5 sm:p-8 h-full flex flex-col justify-between cursor-pointer border border-white/80 hover:border-[#8DBBFF]/60 hover:shadow-glass-hover transition-all duration-300"
               >
                 {/* Header tag */}
                 <div>

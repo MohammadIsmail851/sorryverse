@@ -175,7 +175,7 @@ export const GlassHeart: React.FC<GlassHeartProps> = ({
           key={p.id}
           className="absolute top-1/2 left-1/2 w-2 h-2 rounded-full pointer-events-none"
           style={{
-            background: `hsl(${220 + Math.random() * 60}, 80%, 75%)`,
+            background: `hsl(${220 + ((p.id * 23) % 55)}, 85%, 72%)`,
           }}
           initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
           animate={{

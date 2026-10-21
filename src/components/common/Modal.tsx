@@ -46,7 +46,7 @@ export const Modal: React.FC<ModalProps> = ({
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto"
         >
           {/* Backdrop */}
           <motion.div
@@ -64,7 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.92, opacity: 0, y: 15 }}
             transition={{ type: 'spring', stiffness: 350, damping: 25 }}
-            className={`relative z-10 w-full ${maxWidth} bg-white/90 backdrop-blur-2xl border border-white/90 rounded-3xl shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto`}
+            className={`relative z-10 w-full ${maxWidth} bg-white/90 backdrop-blur-2xl border border-white/90 rounded-3xl shadow-2xl p-4 sm:p-8 max-h-[90vh] overflow-y-auto`}
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#CFE5FF]/40 mb-5">
               {title ? (

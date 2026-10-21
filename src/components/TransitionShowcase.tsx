@@ -115,29 +115,29 @@ export const TransitionShowcase: React.FC<TransitionShowcaseProps> = ({ isOpen, 
         className="relative w-full max-w-6xl max-h-[92vh] bg-white/95 backdrop-blur-2xl border border-white/90 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
       >
         {/* Top Header */}
-        <div className="p-4 sm:p-6 border-b border-[#CFE5FF]/50 flex flex-wrap items-center justify-between gap-4 bg-[#F8FBFF]">
+        <div className="p-3 sm:p-6 border-b border-[#CFE5FF]/50 flex flex-wrap items-center justify-between gap-2 sm:gap-4 bg-[#F8FBFF]">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#8DBBFF]/20 text-[#648BFF] text-xs font-bold uppercase tracking-wider">
+              <span className="px-2 py-0.5 rounded-full bg-[#8DBBFF]/20 text-[#648BFF] text-[10px] sm:text-xs font-bold uppercase tracking-wider">
                 Verification Lab
               </span>
-              <span className="text-xs font-mono font-semibold text-[#78809B]">
+              <span className="text-[11px] sm:text-xs font-mono font-semibold text-[#78809B]">
                 {verifiedCount} / {ALL_TRANSITIONS.length} Verified ({progressPercent}%)
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-serif font-bold text-[#202642]">
+            <h2 className="text-base sm:text-2xl font-serif font-bold text-[#202642]">
               SORRYVERSE Transition System
             </h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Button size="sm" variant="glass" onClick={handleVerifyAll} icon={<CheckCheck className="w-3.5 h-3.5" />}>
               Verify All
             </Button>
             <button
               onClick={onClose}
               aria-label="Close transition showcase"
-              className="p-2 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-[#EEF5FF] transition-colors cursor-pointer"
+              className="p-1.5 sm:p-2 rounded-full text-[#78809B] hover:text-[#202642] hover:bg-[#EEF5FF] transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -155,7 +155,7 @@ export const TransitionShowcase: React.FC<TransitionShowcaseProps> = ({ isOpen, 
         </div>
 
         {/* Navigation Tabs and Search */}
-        <div className="p-4 border-b border-[#EEF5FF] flex flex-wrap items-center justify-between gap-3 bg-white/60">
+        <div className="p-3 sm:p-4 border-b border-[#EEF5FF] flex flex-wrap items-center justify-between gap-2 sm:gap-3 bg-white/60">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
             {[
               { id: 'page', label: 'Page Transitions', icon: <Layers className="w-3.5 h-3.5" />, count: TRANSITION_COUNTS.page },

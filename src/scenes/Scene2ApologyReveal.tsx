@@ -18,7 +18,7 @@ const CinematicWord: React.FC<{
   delay?: number;
   color?: string;
   size?: string;
-}> = ({ word, delay = 0, color = '#648BFF', size = 'text-5xl sm:text-7xl md:text-9xl' }) => {
+}> = ({ word, delay = 0, color = '#648BFF', size = 'text-4xl sm:text-6xl md:text-8xl lg:text-9xl' }) => {
   return (
     <div
       className={`inline-flex font-serif font-black tracking-wider ${size}`}
@@ -120,7 +120,7 @@ export const Scene2ApologyReveal: React.FC<Scene2Props> = ({ config, onProceed }
                 word={config.scene2.mainWord}
                 delay={0}
                 color="#648BFF"
-                size="text-5xl sm:text-7xl md:text-8xl"
+                size="text-4xl sm:text-6xl md:text-8xl lg:text-9xl"
               />
               {/* Underline sweep */}
               <motion.div
@@ -142,7 +142,7 @@ export const Scene2ApologyReveal: React.FC<Scene2Props> = ({ config, onProceed }
               className="flex flex-col items-center gap-3"
             >
               <h1
-                className="font-serif text-5xl sm:text-7xl md:text-9xl font-black tracking-wider"
+                className="font-serif text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-wider"
                 style={{
                   background: 'linear-gradient(135deg, #648BFF 0%, #7B73F0 35%, #8DBBFF 65%, #DCD6FF 100%)',
                   WebkitBackgroundClip: 'text',

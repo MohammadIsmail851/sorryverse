@@ -64,6 +64,51 @@ export interface ApologyConfig {
     replayButton: string;
     signature: string;
   };
+
+  sceneHourglass: {
+    badge: string;
+    headline: string;
+    subheadline: string;
+    coreQuote: string;
+    reflectionText: string;
+    reverseButtonText: string;
+    normalButtonText: string;
+    continueButton: string;
+  };
+
+  sceneLetter: {
+    badge: string;
+    title: string;
+    envelopeLabel: string;
+    salutation: string;
+    paragraphs: string[];
+    closing: string;
+    signature: string;
+    unfoldPrompt: string;
+    continueButton: string;
+  };
+
+  sceneHealingHeart: {
+    badge: string;
+    headline: string;
+    description: string;
+    promises: Array<{
+      id: string;
+      title: string;
+      detail: string;
+      tag: string;
+    }>;
+    repairedMessage: string;
+    continueButton: string;
+  };
+
+  sceneOpenDoor: {
+    badge: string;
+    headline: string;
+    subheadline: string;
+    reflection: string;
+    stepThroughButton: string;
+  };
 }
 
 export const defaultApologyConfig: ApologyConfig = {
@@ -191,5 +236,75 @@ export const defaultApologyConfig: ApologyConfig = {
     reassurance: "May your day be peaceful and your heart be light.",
     replayButton: "Replay the experience",
     signature: "Made with sincerity."
+  },
+
+  sceneHourglass: {
+    badge: "Signature Reflection",
+    headline: "If I Could Turn Back Time",
+    subheadline: "A symbolic pause to honor what happened, and to wish I had handled things differently.",
+    coreQuote: "I can't change what happened, but I can choose what I do next.",
+    reflectionText: "Time moves strictly forward—and while we cannot rewrite the past, we have complete power over how we learn, how we listen, and how we care from this moment on.",
+    reverseButtonText: "Reverse Flow (Symbolic)",
+    normalButtonText: "Let Time Flow",
+    continueButton: "To The Unspoken Letter",
+  },
+
+  sceneLetter: {
+    badge: "Unspoken Words",
+    title: "An Honest Letter From My Heart",
+    envelopeLabel: "For Your Eyes Only • With Deep Care",
+    salutation: "Dear Friend,",
+    paragraphs: [
+      "I am writing this because some things are too important to leave unsaid, yet deserve the quiet space of written words rather than the haste of a conversation.",
+      "Looking back at what happened, I see where I failed to understand your perspective. I allowed impatience or thoughtlessness to eclipse the gentleness you deserved.",
+      "You did not deserve the hurt that followed. My intentions may not have been cruel, but the weight of the impact remains real—and for that impact, I am deeply, unequivocally sorry.",
+      "Please know there are no hidden demands here, no pressure to forgive, and no rush to make anything 'okay.' Your peace of mind and comfort are what truly matter most."
+    ],
+    closing: "With sincere regard and quiet hope,",
+    signature: "Always yours in sincerity.",
+    unfoldPrompt: "Tap the wax seal to open and read",
+    continueButton: "Carry These Words Forward",
+  },
+
+  sceneHealingHeart: {
+    badge: "Golden Repair",
+    headline: "The Healing Heart",
+    description: "In the ancient art of Kintsugi, broken pieces are joined with gold—honoring the history rather than hiding it. Touch each commitment to illuminate the mend.",
+    promises: [
+      {
+        id: "listening",
+        title: "Patience & Active Listening",
+        detail: "Pausing before speaking, hearing what is unspoken, and valuing your feelings above my defense.",
+        tag: "Commitment I"
+      },
+      {
+        id: "accountability",
+        title: "True Ownership Without Deflection",
+        detail: "Acknowledging mistakes directly, never shifting blame, and learning from every misstep.",
+        tag: "Commitment II"
+      },
+      {
+        id: "boundaries",
+        title: "Honoring Space & Boundaries",
+        detail: "Respecting your distance and pace completely, with zero rush or emotional pressure.",
+        tag: "Commitment III"
+      },
+      {
+        id: "growth",
+        title: "Demonstrated, Steady Growth",
+        detail: "Showing real change through consistent actions over time, rather than empty promises.",
+        tag: "Commitment IV"
+      }
+    ],
+    repairedMessage: "Healing isn't erasing the cracks; it's filling them with gold and genuine care.",
+    continueButton: "Step Toward The Light",
+  },
+
+  sceneOpenDoor: {
+    badge: "A Hopeful Threshold",
+    headline: "The Open Doorway",
+    subheadline: "A gentle threshold into tomorrow, leaving all pressure behind.",
+    reflection: "Whatever choice you make, this doorway represents peace, mutual respect, and unconditional care for your feelings.",
+    stepThroughButton: "Step Through The Door",
   }
 };

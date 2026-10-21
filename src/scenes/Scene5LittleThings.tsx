@@ -67,7 +67,7 @@ export const Scene5LittleThings: React.FC<Scene5Props> = ({ config, onProceed })
         {config.scene5Memories.map((mem, idx) => (
           <div
             key={mem.id}
-            className="flex-shrink-0 w-[280px] sm:w-[320px] snap-center"
+            className="flex-shrink-0 w-[260px] sm:w-[320px] snap-center"
           >
             <AnimatedElement variant="card-stack-expand" className="h-full">
               <div className="glass-panel rounded-3xl p-6 h-full flex flex-col justify-between border border-white/90 bg-white/75 backdrop-blur-xl shadow-glass hover:shadow-glass-hover transition-all">

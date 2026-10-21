@@ -11,10 +11,12 @@ import { CurtainIntro } from './components/CurtainIntro';
 // Scenes
 import { Scene1DreamyOpening } from './scenes/Scene1DreamyOpening';
 import { Scene2ApologyReveal } from './scenes/Scene2ApologyReveal';
-import { Scene3HonestMoment } from './scenes/Scene3HonestMoment';
+import { Scene3Hourglass } from './scenes/Scene3Hourglass';
+import { Scene4CinematicLetter } from './scenes/Scene4CinematicLetter';
 import { Scene4WordsFromHeart } from './scenes/Scene4WordsFromHeart';
 import { Scene5LittleThings } from './scenes/Scene5LittleThings';
-import { Scene6InteractiveSurprise } from './scenes/Scene6InteractiveSurprise';
+import { Scene7HealingHeart } from './scenes/Scene7HealingHeart';
+import { Scene8OpenDoorway } from './scenes/Scene8OpenDoorway';
 import { Scene7FinalMessage } from './scenes/Scene7FinalMessage';
 import { Scene8QuietEnding } from './scenes/Scene8QuietEnding';
 
@@ -22,12 +24,14 @@ import { Scene8QuietEnding } from './scenes/Scene8QuietEnding';
 const SCENE_TRANSITIONS: Record<number, PageTransitionId> = {
   1: 'fade-through-white',
   2: 'directional-blur',
-  3: 'card-flip-3d',
-  4: 'liquid-morph',
-  5: 'circular-clip',
-  6: 'layered-parallax',
-  7: 'perspective-depth',
-  8: 'staggered-cascade',
+  3: 'curtain-reveal',
+  4: 'card-flip-3d',
+  5: 'liquid-morph',
+  6: 'circular-clip',
+  7: 'layered-parallax',
+  8: 'perspective-depth',
+  9: 'spring-shared-morph',
+  10: 'staggered-cascade',
 };
 
 export const App: React.FC = () => {
@@ -43,7 +47,7 @@ export const App: React.FC = () => {
     }
     return false;
   });
-  const totalScenes = 8;
+  const totalScenes = 10;
 
   const goToScene = useCallback((targetScene: number) => {
     setDirection(targetScene > currentScene ? 'forward' : 'reverse');
@@ -140,36 +144,48 @@ export const App: React.FC = () => {
             />
           )}
           {currentScene === 3 && (
-            <Scene3HonestMoment
+            <Scene3Hourglass
               config={defaultApologyConfig}
               onProceed={handleNextScene}
             />
           )}
           {currentScene === 4 && (
-            <Scene4WordsFromHeart
+            <Scene4CinematicLetter
               config={defaultApologyConfig}
               onProceed={handleNextScene}
             />
           )}
           {currentScene === 5 && (
-            <Scene5LittleThings
+            <Scene4WordsFromHeart
               config={defaultApologyConfig}
               onProceed={handleNextScene}
             />
           )}
           {currentScene === 6 && (
-            <Scene6InteractiveSurprise
+            <Scene5LittleThings
               config={defaultApologyConfig}
               onProceed={handleNextScene}
             />
           )}
           {currentScene === 7 && (
-            <Scene7FinalMessage
+            <Scene7HealingHeart
               config={defaultApologyConfig}
               onProceed={handleNextScene}
             />
           )}
           {currentScene === 8 && (
+            <Scene8OpenDoorway
+              config={defaultApologyConfig}
+              onProceed={handleNextScene}
+            />
+          )}
+          {currentScene === 9 && (
+            <Scene7FinalMessage
+              config={defaultApologyConfig}
+              onProceed={handleNextScene}
+            />
+          )}
+          {currentScene === 10 && (
             <Scene8QuietEnding
               config={defaultApologyConfig}
               onReplay={handleReplay}

@@ -302,9 +302,14 @@ export const CurtainIntro: React.FC<CurtainIntroProps> = ({ onComplete, isReplay
               <h1 className="font-serif text-3xl sm:text-5xl font-black tracking-wider text-[#202642] mb-3">
                 SORRYVERSE
               </h1>
-              <p className="font-editorial italic text-base sm:text-xl text-[#78809B]">
-                “A little something from my heart…”
-              </p>
+              <div className="space-y-1 mb-2">
+                <p className="font-editorial italic text-base sm:text-xl text-[#78809B]">
+                  Some words take courage…
+                </p>
+                <p className="font-editorial italic text-sm sm:text-base text-[#648BFF] font-medium">
+                  And some feelings deserve to be expressed.
+                </p>
+              </div>
             </div>
 
             {/* STAGE 2: LOADING INDICATOR OR STAGE 3: OPEN BUTTON */}

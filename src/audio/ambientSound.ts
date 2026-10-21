@@ -75,6 +75,107 @@ class AmbientSoundManager {
     });
   }
 
+  public playPaperRustle() {
+    if (!this.ctx || this.isMuted) return;
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+    try {
+      const bufferSize = this.ctx.sampleRate * 0.35;
+      const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.08));
+      }
+      const noise = this.ctx.createBufferSource();
+      noise.buffer = buffer;
+      const filter = this.ctx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(1400, this.ctx.currentTime);
+      filter.Q.setValueAtTime(1.5, this.ctx.currentTime);
+      const gain = this.ctx.createGain();
+      gain.gain.setValueAtTime(0.04, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.35);
+      noise.connect(filter);
+      filter.connect(gain);
+      if (this.masterGain) gain.connect(this.masterGain);
+      noise.start();
+    } catch {
+      // Audio is non-blocking
+    }
+  }
+
+  public playTimeReverseSwoosh() {
+    if (!this.ctx || this.isMuted) return;
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      const filter = this.ctx.createBiquadFilter();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(220, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 1.2);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(600, this.ctx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(2200, this.ctx.currentTime + 1.2);
+      gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.05, this.ctx.currentTime + 0.6);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.4);
+      osc.connect(filter);
+      filter.connect(gain);
+      if (this.masterGain) gain.connect(this.masterGain);
+      osc.start(this.ctx.currentTime);
+      osc.stop(this.ctx.currentTime + 1.45);
+    } catch {
+      // Audio is non-blocking
+    }
+  }
+
+  public playHeartPulse() {
+    if (!this.ctx || this.isMuted) return;
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(130.81, this.ctx.currentTime); // C3
+      osc.frequency.exponentialRampToValueAtTime(65.41, this.ctx.currentTime + 0.4);
+      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.5);
+      osc.connect(gain);
+      if (this.masterGain) gain.connect(this.masterGain);
+      osc.start(this.ctx.currentTime);
+      osc.stop(this.ctx.currentTime + 0.55);
+    } catch {
+      // Audio is non-blocking
+    }
+  }
+
+  public playDoorwayChime() {
+    if (!this.ctx || this.isMuted) return;
+    const chord = [329.63, 392.00, 523.25, 659.25, 783.99]; // E minor / G major ethereal chord
+    chord.forEach((freq, idx) => {
+      setTimeout(() => {
+        if (!this.ctx || this.isMuted) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+        gain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.035, this.ctx.currentTime + 0.15);
+        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 3.8);
+        osc.connect(gain);
+        if (this.masterGain) gain.connect(this.masterGain);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 4.0);
+      }, idx * 100);
+    });
+  }
+
   public startAmbience() {
     this.init();
     if (!this.ctx) return;
